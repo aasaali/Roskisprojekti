@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Tasks({ tasks }) {
+  
   if (!tasks || tasks.length === 0) {
     return <p style={{ textAlign: "center" }}>Ei avoimia tehtäviä</p>;
   }
