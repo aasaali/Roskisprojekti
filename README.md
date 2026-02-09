@@ -27,6 +27,7 @@ Varmista, että seuraavat ovat asennettuna:
 Kloonaa repositorio omalle koneellesi:
 
 `git clone https://github.com/USERNAME/REPOSITORY_NAME.git`
+
 `cd REPOSITORY_NAME`
 
 ### Asenna projektin riippuvuudet:
@@ -39,4 +40,5 @@ Kloonaa repositorio omalle koneellesi:
 
 Käyttöliittymä avautuu selaimeen osoitteeseen, jonka Vite tulostaa terminaaliin, yleensä:
 `http://localhost:xxxx`
+
 
