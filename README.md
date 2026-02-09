@@ -13,7 +13,7 @@ Tässä vaiheessa repositorio sisältää vain käyttöliittymän lähdekoodin.
 - CSS
 - npm
 
-- ### Vaatimukset
+### Vaatimukset
 
 Varmista, että seuraavat ovat asennettuna:
 
@@ -39,3 +39,4 @@ Kloonaa repositorio omalle koneellesi:
 
 Käyttöliittymä avautuu selaimeen osoitteeseen, jonka Vite tulostaa terminaaliin, yleensä:
 `http://localhost:xxxx`
+
