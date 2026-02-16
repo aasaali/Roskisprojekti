@@ -60,6 +60,7 @@ const [lastTask, setLastTask] = useState(null);
                 <div className="navbar-nav justify-content-center w-100">
                   <Link className="nav-link mx-3" to="/">Tilannekuva</Link>
                   <Link className="nav-link mx-3" to="/tehtavat">Työtehtävät</Link>
+                  <Link className="nav-link mx-3" to="/sailiot">Säiliöt</Link>
                   <Link className="nav-link mx-3" to="/raportit">Raportit</Link>
                 </div>
               </div>
