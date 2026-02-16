@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Tasks from "./Tasks";
 import Containers from "./Containers";
-
 import Reports from "./Reports";
 
 export default function App() {
@@ -75,7 +74,7 @@ const [lastTask, setLastTask] = useState(null);
           <Routes>
             <Route path="/" element={<Dashboard containers={containers} tasks={tasks} createTask={createTask} />} />
             <Route path="/tehtavat" element={<Tasks tasks={tasks} />} />
-            <Route   path="/sailiot"   element={<Containers containers={containers} />} />
+            <Route   path="/sailiot" element={<Containers containers={containers} setContainers={setContainers} />} />
             <Route path="/raportit" element={<Reports containers={containers} tasks={tasks} />} />
           </Routes>
         </main>
