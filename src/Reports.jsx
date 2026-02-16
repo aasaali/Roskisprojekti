@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
-export default function Reports({ containers }) {
-  const [selectedContainer, setSelectedContainer] = useState(containers[0]);
+export default function Reports({ containers, completedTasks }) {
+
+  const [selectedContainer, setSelectedContainer] = useState(
+    containers && containers.length > 0 ? containers[0] : null
+  );
+
   const [containerHistory, setContainerHistory] = useState([]);
   const [emptyHistory, setEmptyHistory] = useState([]);
+
+  useEffect(() => {
+    if (containers.length > 0) {
+      setSelectedContainer(containers[0]);
+    }
+  }, [containers]);
+
+  if (!containers || containers.length === 0) {
+    return <p>Ei säiliödataa</p>;
+  }
+
+  if (!selectedContainer) {
+    return <p>Ladataan...</p>;
+  }
+
+
+ 
 
   // Luo päivähistoria 14 päivälle (täyttöaste)
   const generateDailyHistory = (fillLevel) => {
@@ -37,11 +58,18 @@ export default function Reports({ containers }) {
   };
 
   useEffect(() => {
-    setContainerHistory(
-      selectedContainer.history || generateDailyHistory(selectedContainer.fillLevel)
-    );
-    setEmptyHistory(generateEmptyHistory());
-  }, [selectedContainer]);
+
+  if (!selectedContainer) return;
+
+  setContainerHistory(
+    selectedContainer.history ||
+    generateDailyHistory(selectedContainer.fillLevel)
+  );
+
+  setEmptyHistory(generateEmptyHistory());
+
+}, [selectedContainer]);
+
 
   // Tilastoanalyysi
   const fillLevels = containerHistory.map((h) => h.fillLevel);
@@ -61,14 +89,19 @@ export default function Reports({ containers }) {
       <div className="w-full max-w-md p-4 bg-white rounded shadow text-center">
         <label className="font-medium mr-2">Valitse säiliö:</label>
         <select
-          value={selectedContainer.id}
-          onChange={(e) =>
-            setSelectedContainer(
-              containers.find((c) => c.id === e.target.value)
-            )
-          }
-          className="border px-2 py-1 rounded"
-        >
+  value={selectedContainer?.id || ""}
+  onChange={(e) => {
+    const found = containers.find(
+      (c) => c.id === e.target.value
+    );
+
+    if (found) {
+      setSelectedContainer(found);
+    }
+  }}
+  className="border px-2 py-1 rounded"
+>
+
           {containers.map((c) => (
             <option key={c.id} value={c.id}>
               {c.location}
@@ -114,6 +147,26 @@ export default function Reports({ containers }) {
         <p>Tyhjennykset viimeisen 14 päivän aikana: {emptiedDays}</p>
         <p>{`Kriittiset päivät (>80% täyttöaste): ${criticalDays}`}</p>
       </div>
+
+      {/* Suoritetut työtehtävät */}
+<div className="w-full max-w-md p-4 bg-white rounded shadow text-center space-y-2">
+  <h3 className="font-semibold mb-2">Suoritetut tyhjennykset</h3>
+
+  {!completedTasks || completedTasks.length === 0 ? (
+
+    <p>Ei suoritettuja tehtäviä</p>
+  ) : (
+    completedTasks.map(task => (
+      <div key={task.id}>
+        {task.containerName} tyhjennetty – {task.completedAt}
+      </div>
+    ))
+  )}
+</div>
+
     </section>
+
+    
   );
+  
 }

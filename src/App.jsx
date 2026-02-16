@@ -57,6 +57,51 @@ useEffect(() => {
   });
 }, [containers]);
 
+const [completedTasks, setCompletedTasks] = useState([]);
+
+const handleCompleteTask = (taskId, containerId) => {
+
+  // 1️⃣ Nollaa säiliön täyttöaste
+  setContainers(prev =>
+    prev.map(c =>
+      c.id === containerId
+        ? { ...c, fillLevel: 0 }
+        : c
+    )
+  );
+
+  // 2️⃣ Siirrä tehtävä raportteihin
+  setTasks(prevTasks => {
+    const taskToComplete = prevTasks.find(t => t.id === taskId);
+
+    if (taskToComplete) {
+
+      setCompletedTasks(prevCompleted => {
+
+        // 🔒 tarkistus
+        const alreadyExists = prevCompleted.some(
+          t => t.id === taskId
+        );
+
+        if (alreadyExists) return prevCompleted;
+
+        return [
+          ...prevCompleted,
+          {
+            ...taskToComplete,
+            completedAt: new Date().toLocaleString()
+          }
+        ];
+      });
+    }
+
+
+    // Poista avoimista
+    return prevTasks.filter(t => t.id !== taskId);
+  });
+
+};
+
 
 
   return (
@@ -91,9 +136,9 @@ useEffect(() => {
         <main className="content">
           <Routes>
             <Route path="/" element={<Dashboard containers={containers} tasks={tasks} />} />
-            <Route path="/tehtavat" element={<Tasks tasks={tasks} />} />
             <Route   path="/sailiot" element={<Containers containers={containers} setContainers={setContainers} />} />
-            <Route path="/raportit" element={<Reports containers={containers} tasks={tasks} />} />
+            <Route path="/tehtavat" element={<Tasks tasks={tasks} onCompleteTask={handleCompleteTask} /> }/>
+            <Route path="/raportit" element={<Reports containers={containers} completedTasks={completedTasks} /> } />
           </Routes>
         </main>
 
