@@ -3,32 +3,15 @@ import BinCard from "./BinCard";
 
 export default function Dashboard({ containers, tasks, createTask }) {
 
-  // 🔹 Luokittelu
-  const criticalBins = containers.filter(
-    (bin) => bin.fillLevel >= 85
-  );
-
-  const warningBins = containers.filter(
-    (bin) => bin.fillLevel >= 70 && bin.fillLevel < 85
-  );
-
-  const normalBins = containers.filter(
-    (bin) => bin.fillLevel < 70
-  );
+  const criticalBins = containers.filter(bin => bin.fillLevel >= 85);
+  const warningBins = containers.filter(bin => bin.fillLevel >= 70 && bin.fillLevel < 85);
+  const normalBins = containers.filter(bin => bin.fillLevel < 70);
 
   const ongoing = tasks.filter(t => t.status === "Työn alla");
 
-  
-  // 🔹 Apufunktio renderöintiin
-  const renderBins = (bins) => (
-    <div style={{
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      gap: "10px",
-      marginBottom: "30px"
-    }}>
-      {bins.map((bin) => (
+  const renderBinsColumn = (bins) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "16px", alignItems: "center" }}>
+      {bins.map(bin => (
         <BinCard
           key={bin.id}
           id={bin.id}
@@ -46,36 +29,32 @@ export default function Dashboard({ containers, tasks, createTask }) {
 
   return (
     <div style={{ padding: "20px" }}>
+      <h2 className="text-center mb-4">Tilannekuva</h2>
 
-      {/* 🔴 KRIITTINEN */}
-      <h2 style={{ color: "red", marginTop: "10px" }}>
-        Kriittinen täyttöaste
-      </h2>
-      {criticalBins.length > 0
-        ? renderBins(criticalBins)
-        : <p>Ei kriittisiä säiliöitä</p>
-      }
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        gap: "20px"
+      }}>
+        {/* 🔴 Kriittiset vasemmalla */}
+        <div>
+          <h3 style={{ color: "red", textAlign: "center" }}>Kriittiset</h3>
+          {criticalBins.length > 0 ? renderBinsColumn(criticalBins) : <p>Ei kriittisiä säiliöitä</p>}
+        </div>
 
-      {/* 🟠 VAROITUS */}
-      <h2 style={{ color: "orange" }}>
-        Varoitusrajan ylittäneet
-      </h2>
-      {warningBins.length > 0
-        ? renderBins(warningBins)
-        : <p>Ei varoitustason säiliöitä</p>
-      }
+        {/* 🟠 Varoitustason säiliöt keskellä */}
+        <div>
+          <h3 style={{ color: "orange", textAlign: "center" }}>Varoitustason säiliöt</h3>
+          {warningBins.length > 0 ? renderBinsColumn(warningBins) : <p>Ei varoitustason säiliöitä</p>}
+        </div>
 
-      {/* 🟢 NORMAALI */}
-      <h2 style={{ color: "green" }}>
-        Normaalit säiliöt
-      </h2>
-      {normalBins.length > 0
-        ? renderBins(normalBins)
-        : <p>Ei normaaleja säiliöitä</p>
-      }
-
+        {/* 🟢 Normaalit oikealla */}
+        <div>
+          <h3 style={{ color: "green", textAlign: "center" }}>Normaalit</h3>
+          {normalBins.length > 0 ? renderBinsColumn(normalBins) : <p>Ei normaaleja säiliöitä</p>}
+        </div>
+      </div>
     </div>
   );
-
-  
 }
