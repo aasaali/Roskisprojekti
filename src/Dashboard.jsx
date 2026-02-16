@@ -1,13 +1,13 @@
 import React from "react";
 import BinCard from "./BinCard";
 
-export default function Dashboard({ containers, tasks, createTask }) {
+export default function Dashboard({ containers, tasks }) {
 
   const criticalBins = containers.filter(bin => bin.fillLevel >= 85);
   const warningBins = containers.filter(bin => bin.fillLevel >= 70 && bin.fillLevel < 85);
   const normalBins = containers.filter(bin => bin.fillLevel < 70);
 
-  const ongoing = tasks.filter(t => t.status === "Työn alla");
+  
 
   const renderBinsColumn = (bins) => (
     <div style={{ display: "flex", flexDirection: "column", gap: "16px", alignItems: "center" }}>
@@ -20,8 +20,6 @@ export default function Dashboard({ containers, tasks, createTask }) {
           capacity={bin.capacity}
           lastUpdate={bin.lastUpdate}
           isOnline={bin.isOnline}
-          createTask={createTask}
-          isOngoing={ongoing.some(t => t.id === bin.id)}
         />
       ))}
     </div>

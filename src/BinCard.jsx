@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function BinCard({ id, location, fillLevel, capacity, lastUpdate, isOnline, createTask, isOngoing }) {
+export default function BinCard({ id, location, fillLevel, capacity, lastUpdate, isOnline }) {
 
   // Väri täyttöasteen mukaan, mutta offline = harmaa
   let color = "green";
@@ -54,35 +54,8 @@ export default function BinCard({ id, location, fillLevel, capacity, lastUpdate,
       <p>Status: {isOnline ? "Online" : "Offline"}</p>
 
 
-      <button
-        onClick={() =>
-          createTask({
-            id,
-            location,
-            fillLevel
-          })
-        }
-        style={{
-          marginTop: "10px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-          padding: "8px 12px",
-          cursor: "pointer"
-        }}
-      >
-        Aloita tyhjennys
-      </button>
-      {isOngoing && (
-  <p style={{
-    marginTop: "8px",
-    color: "blue",
-    fontWeight: "bold"
-  }}>
-    Työn alla
-  </p>
-)}
+      
+
 
     </div>
   );

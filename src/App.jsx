@@ -19,27 +19,13 @@ export default function App() {
   ]);
 
   const [tasks, setTasks] = useState([
-    { id: "t1", containerName: "Nilsiä", alertLevel: 80, assignedTo: "Matti", status: "Työn alla" },
-    { id: "t2", containerName: "Kaavi", alertLevel: 95, assignedTo: "Liisa", status: "Työn alla" },
+    { id: "t1", containerName: "Nilsiä", alertLevel: 80, assignedTo: "Matti"},
+    { id: "t2", containerName: "Kaavi", alertLevel: 95, assignedTo: "Liisa"},
   ]);
 
-  const [showPopup, setShowPopup] = useState(false);
-const [lastTask, setLastTask] = useState(null);
+  
 
 
-  const createTask = (container) => {
-    const newTask = {
-      id: container.id, 
-      containerName: container.location,
-      alertLevel: container.fillLevel,
-      assignedTo: "Ei määritetty",
-      status: "Työn alla"
-    };
-    setTasks(prev => [...prev, newTask]);
-
-    setLastTask(newTask);
-  setShowPopup(true);
-  };
 
   return (
     <Router>
@@ -72,25 +58,14 @@ const [lastTask, setLastTask] = useState(null);
         {/* Content */}
         <main className="content">
           <Routes>
-            <Route path="/" element={<Dashboard containers={containers} tasks={tasks} createTask={createTask} />} />
+            <Route path="/" element={<Dashboard containers={containers} tasks={tasks} />} />
             <Route path="/tehtavat" element={<Tasks tasks={tasks} />} />
             <Route   path="/sailiot" element={<Containers containers={containers} setContainers={setContainers} />} />
             <Route path="/raportit" element={<Reports containers={containers} tasks={tasks} />} />
           </Routes>
         </main>
 
-{showPopup && (
-  <div className="task-popup">
-    <div className="task-popup-content">
-      <h4>Tehtävä lisätty</h4>
-      <p>Roska-astia {lastTask?.id}</p>
 
-      <button onClick={() => setShowPopup(false)}>
-        Sulje
-      </button>
-    </div>
-  </div>
-)}
 
       </div>
     </Router>
