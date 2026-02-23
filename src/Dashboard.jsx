@@ -1,7 +1,7 @@
 import React from "react";
 import BinCard from "./BinCard";
 
-export default function Dashboard({ containers, tasks }) {
+export default function Dashboard({ containers, tasks, onRefresh }) {
 
   const criticalBins = containers.filter(bin => bin.fillLevel >= 85);
   const warningBins = containers.filter(bin => bin.fillLevel >= 70 && bin.fillLevel < 85);
@@ -27,7 +27,16 @@ export default function Dashboard({ containers, tasks }) {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2 className="text-center mb-4">Tilannekuva</h2>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative", marginBottom: "20px" }}>
+        <h2 className="m-0">Tilannekuva</h2>
+        <button 
+          className="btn btn-primary" 
+          onClick={onRefresh} 
+          style={{ position: "absolute", right: 0 }}
+        >
+          Päivitä säiliötiedot
+        </button>
+      </div>
 
       <div style={{
         display: "flex",
@@ -35,6 +44,9 @@ export default function Dashboard({ containers, tasks }) {
         alignItems: "flex-start",
         gap: "20px"
       }}>
+
+
+
         {/* 🔴 Kriittiset vasemmalla */}
         <div>
           <h3 style={{ color: "red", textAlign: "center" }}>

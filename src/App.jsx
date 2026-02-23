@@ -98,6 +98,32 @@ export default function App() {
     });
   };
 
+  //random päivitystiedot POISTA KUNHAN BACKENDISTA SAADAAN SENSORITIEDOT
+  const refreshContainers = () => {
+  setContainers(prevContainers =>
+    prevContainers.map(container => {
+      // simuloi sensoripäivitystä
+      const randomChange = Math.floor(Math.random() * 20) - 5;
+
+      let newFill = container.fillLevel + randomChange;
+
+      // rajat 0–100
+      newFill = Math.max(0, Math.min(100, newFill));
+
+      let newStatus = "normal";
+      if (newFill >= 85) newStatus = "critical";
+      else if (newFill >= 70) newStatus = "warning";
+
+      return {
+        ...container,
+        fillLevel: newFill,
+        status: newStatus,
+        lastUpdate: new Date().toLocaleTimeString()
+      };
+    })
+  );
+};
+
   return (
     <Router>
       <div className="app">
@@ -128,7 +154,7 @@ export default function App() {
         {/* Content */}
         <main className="content">
           <Routes>
-            <Route path="/" element={<Dashboard containers={containers} tasks={tasks} />} />
+            <Route path="/" element={<Dashboard containers={containers} tasks={tasks} onRefresh={refreshContainers} />} />
             <Route path="/sailiot" element={<Containers containers={containers} setContainers={setContainers} />} />
             <Route path="/tehtavat" element={<Tasks tasks={tasks} onCompleteTask={handleCompleteTask} />} />
             <Route path="/raportit" element={<Reports containers={containers} completedTasks={completedTasks} />} />
