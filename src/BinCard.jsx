@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function BinCard({ id, location, fillLevel, capacity, lastUpdate, isOnline }) {
+export default function BinCard({ id, location, fillLevel, capacity, lastUpdate, isOnline, hasTask }) {
 
   // Väri täyttöasteen mukaan, mutta offline = harmaa
   let color = "green";
@@ -21,7 +21,9 @@ export default function BinCard({ id, location, fillLevel, capacity, lastUpdate,
       boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
       width: "250px",
       textAlign: "center",
-      margin: "0.5rem"
+      margin: "0.5rem",
+      border: hasTask ? "3px solid #007bff" : "3px solid transparent",
+      transition: "border 0.3s ease"
     }}>
       {/* ID / Nimi */}
       <h3 style={{ marginBottom: "0.5rem" }}>Roska-astia {id}</h3>
@@ -52,6 +54,16 @@ export default function BinCard({ id, location, fillLevel, capacity, lastUpdate,
       <p>Kapasiteetti: {capacity} L</p>
       <p>Viimeksi päivitetty: {lastUpdate}</p>
       <p>Status: {isOnline ? "Online" : "Offline"}</p>
+
+       {hasTask && (
+        <div style={{
+          marginTop: "8px",
+          color: "#007bff",
+          fontWeight: "bold"
+        }}>
+          🔧 Tyhjennys tilattu
+        </div>
+      )}
 
 
       
