@@ -41,5 +41,67 @@ Kloonaa repositorio omalle koneellesi:
 Käyttöliittymä avautuu selaimeen osoitteeseen, jonka Vite tulostaa terminaaliin, yleensä:
 `http://localhost:xxxx`
 
+TIETOKANTAYHTEYS OHJEET:
 
+INTELLJ:
+Avaa View → Tool Windows → Database.
 
+Klikkaa + → Data Source → MySQL.
+
+Syötä:
+
+Host: localhost
+
+Port: 3306
+
+User: root
+
+Password: oma MySQL-salasana
+
+Database: tietokannan nimi
+
+Klikkaa Test Connection → jos onnistuu, paina OK.
+
+Visual Studio Code
+Yhdistä MySQL VS Code -laajennuksella (Helpoin)
+Asenna MySQL (jos ei vielä ole)
+
+Lataa ja asenna:
+
+👉 MySQL Community Server
+
+Asennuksen aikana:
+
+Muista root-salasana
+
+Oletusportti on yleensä 3306
+
+2. Asenna MySQL-laajennus VS Codeen
+
+Avaa VS Code
+
+Mene Extensions (Ctrl + Shift + X)
+
+Hae:
+
+👉 MySQL (tekijä esim. cweijan)
+
+Paina Install
+
+3.Luo yhteys MySQL-palvelimeen
+
+Paina vasemman reunan MySQL-ikonia
+
+Valitse Add Connection
+
+Täytä tiedot:
+
+Kenttä	Arvo
+Host	localhost
+User	root
+Password	(se jonka asetit)
+Port	3306
+
+Klikkaa Connect
+
+Jos kaikki meni oikein, näet tietokannat vasemmalla 🎉
