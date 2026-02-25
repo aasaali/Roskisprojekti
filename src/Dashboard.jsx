@@ -1,23 +1,32 @@
 import React from "react";
 import BinCard from "./BinCard";
 
-export default function Dashboard({ containers = [], tasks = [], onRefresh }) {
+export default function Dashboard({
+  containers = [],
+  tasks = [],
+  onRefresh,
+  systemOffline,
+  systemError
+}) {
 
   const criticalBins = containers.filter(bin => bin.fillLevel >= 85);
   const warningBins = containers.filter(bin => bin.fillLevel >= 70 && bin.fillLevel < 85);
   const normalBins = containers.filter(bin => bin.fillLevel < 70);
 
+  const offlineBins = containers.filter(bin => !bin.isOnline);
+
   const totalBins = containers.length;
 
   const renderBinsColumn = (bins) => (
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      gap: "16px",
-      alignItems: "center"
-    }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+        alignItems: "center"
+      }}
+    >
       {bins.map(bin => {
-
         const hasTask = tasks?.some(
           task => task.containerId === bin.id
         );
@@ -40,14 +49,42 @@ export default function Dashboard({ containers = [], tasks = [], onRefresh }) {
 
   return (
     <div style={{ padding: "20px" }}>
+
       
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-        marginBottom: "20px"
-      }}>
+      {/*  DATAYHTEYS-HÄLYTYKSET */}
+      
+      {systemOffline && (
+        <div className="alert alert-danger text-center">
+          <strong>JÄRJESTELMÄ OFFLINE</strong><br />
+          Yhteys backend-palvelimeen katkennut.
+        </div>
+      )}
+
+      {!systemOffline && systemError && (
+        <div className="alert alert-warning text-center">
+          <strong>Yhteysvirhe:</strong> {systemError}
+        </div>
+      )}
+
+      {!systemOffline && offlineBins.length > 0 && (
+        <div className="alert alert-secondary text-center">
+          <strong>Säiliöyhteys katkennut:</strong>{" "}
+          {offlineBins.length} / {totalBins} säiliötä ei vastaa.
+        </div>
+      )}
+
+      
+      {/* OTSIKKO + PÄIVITYS */}
+      
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          marginBottom: "20px"
+        }}
+      >
         <h2 className="m-0">Tilannekuva</h2>
 
         <button
@@ -59,12 +96,17 @@ export default function Dashboard({ containers = [], tasks = [], onRefresh }) {
         </button>
       </div>
 
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        gap: "20px"
-      }}>
+      
+      {/* SÄILIÖSARAKKEET */}
+     
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          gap: "20px"
+        }}
+      >
 
         {/* 🔴 Kriittiset */}
         <div>
