@@ -49,9 +49,9 @@ export default function App() {
               containerId: container.id,
               containerName: container.location,
               alertLevel: container.fillLevel,
-              priority:
-                container.fillLevel >= 85 ? "Kriittinen" : "Varoitus",
-              assignedTo: "Ei osoitettu"
+              priority:container.fillLevel >= 85 ? "Kriittinen" : "Varoitus",
+              assignedTo: "Ei osoitettu",
+              createdAt: new Date().toISOString() 
             });
           }
         }
@@ -84,7 +84,7 @@ export default function App() {
             ...prevCompleted,
             {
               ...taskToComplete,
-              completedAt: new Date().toLocaleString()
+              completedAt: new Date().toISOString()
             }
           ];
         });
