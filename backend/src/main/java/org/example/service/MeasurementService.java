@@ -25,7 +25,17 @@ public class MeasurementService {
 
     @Transactional
     public void processTelemetry(MeasurementDto dto) {
+        SiteEntity site = siteRepository.findById(dto.binId())
+                .orElseThrow(() -> new RuntimeException("Site not found for ID: " + dto.binId()));
 
+        MeasurementEntity measurement = new MeasurementEntity();
+        measurement.setSiteEntity(site);
+        
+        measurement.setFillPercent(java.math.BigDecimal.valueOf(dto.fillLevel()));
+        
+        measurement.setMeasuredAt(java.time.Instant.ofEpochSecond(dto.timestamp()));
+
+        measurementRepository.save(measurement); //Maagisesti kirjoittaa tietokantaan. Simsalabim.
 
     }
 
