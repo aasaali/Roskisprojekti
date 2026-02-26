@@ -1,0 +1,49 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/workspace:cached
+    command: sleep infinity
+    depends_on:
+      db:
+        condition: service_healthy
+      mqtt:
+        condition: service_started
+  db:
+    image: mysql:8.0.36
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${DB_NAME}
+    volumes:
+      - roskis_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASS}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "${DB_PORT}:3306"
+
+  mqtt:
+    image: eclipse-mosquitto:2.0.18
+    ports:
+      - "${MQTT_PORT}:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    restart: always
+
+networks:
+  roskis_net:
+    driver: bridge
+
+volumes:
+  roskis_mysql_data:
+  roskis_mqtt_data:
+  roskis_mqtt_log:

@@ -1,0 +1,61 @@
+{
+  "name": "Roskisposkis Dev Env",
+  "dockerComposeFile": "../docker-compose.yml",
+  "forwardPorts": [8080, 1883, 3307],
+  "portsAttributes": {
+    "8080": {
+      "label": "Spring Boot Backend",
+      "onAutoForward": "notify"
+    },
+    "1883": {
+      "label": "Mosquitto MQTT Broker",
+      "onAutoForward": "silent",
+      "elevateIfNeeded": false
+    },
+    "3307": {
+      "label": "MariaDB (External Access)",
+      "onAutoForward": "ignore"
+    }
+  },
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  "containerEnv": {
+    "DB_HOST_INTERNAL": "db",
+    "DB_PORT_INTERNAL": "3306",
+    "MQTT_HOST_INTERNAL": "mqtt",
+    "MQTT_PORT_INTERNAL": "1883"
+  },
+
+  "postCreateCommand": "cd backend && chmod +x mvnw && ./mvnw install -DskipTests && cd ../frontend && npm install",
+  "postStartCommand": "code -r backend/src/main/java/org/example/RoskisposkisApplication.java",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-spring-boot-dashboard",
+        "vmware.vscode-spring-boot",
+        "ms-vscode.js-debug",
+        "dsznajder.es7-react-js-snippets",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "mhutchie.git-graph",
+        "formulahendry.auto-rename-tag"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "java.import.maven.enabled": true,
+        "java.autobuild.enabled": true,
+        "java.server.launchMode": "Standard",
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "java.import.project.resourceFilters": ["node_modules", "target"]
+      }
+    }
+  },
+
+  "remoteUser": "vscode"
+}

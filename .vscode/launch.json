@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch: backend",
+      "request": "launch",
+      "mainClass": "org.example.RoskisposkisApplication",
+      "projectName": "roskisposkis",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "node",
+      "name": "Launch: fronted",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "${workspaceFolder}/frontend",
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Launch: Frontti ja backki",
+      "configurations": ["Launch: backend", "Launch: fronted"]
+    }
+  ]
+}
