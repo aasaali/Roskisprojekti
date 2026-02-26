@@ -13,7 +13,7 @@
 
 - Avaa terminal
 
-- Kloonaile branchi `git clone -b kokkeillaanpa https://github.com/iot-roskisprojekti/Roskisprojekti.git`
+- Kloonaile branchi `git clone -b testailu https://github.com/iot-roskisprojekti/Roskisprojekti.git`
 
 - Nimeä `.env.pohja -> .env` (tee tämä ennen kun avaat projektin dev containerina vscodessa, muuten kaput)
 
