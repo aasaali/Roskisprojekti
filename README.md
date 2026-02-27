@@ -1,4 +1,5 @@
 
+
 # Pikaset hätäset kätyset ohjeet
 
   
@@ -19,8 +20,17 @@
 
 - Avaa `.env` ja aseta vapaavalintainen salasana kohtaan `DB_PASS=`, esim `DB_PASS=päähänsattuu`
 
+##  Jos tahdot backendin, SQL:n ja MQTT:n pyörimään automaagisesti:
+- Navigoi juurikansioon `cd Roskisprojekti`
+- Kirjoita `docker compose up --build -d`
+- Jos buildi onnistuu, niin käytössäsi on backend, SQL ja MQTT dockerin sisällä
+- Tällöin backendin APIn tynkä löytyy `http://localhost:8080/api/sites`
+- MQTT portti: `1884` 
+- `docker compose up --build -d`  komento täytyy suorittaa, jos backendi muuttaa koodia/pom.xml:ää
+- Muutoin `docker compose up -d` on riittävä
 
-## Vaihe 2 (VScode säätö):
+
+## Vaihe 2 (VScode säätö, jatka jos tahdot koodailla backendiä tai tietokantaa):
 - Asenna `Dev Containers` marketplacesta jos ei vielä asennettuna
 - Avaa gitistä kloonattu branchi vscodessa (eli se kansio koneellasi) 
 - Jos `Dev Containers` asennettuna, niin vscode kysyy oikeassa alareunassa, että tahdotko käynnistää dev containerin. Älä hättäile. Varmista että olet nimennyt`.env.pohja -> .env`
