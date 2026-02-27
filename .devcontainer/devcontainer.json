@@ -28,7 +28,6 @@
   },
 
   "postCreateCommand": "cd backend && chmod +x mvnw && ./mvnw install -DskipTests && cd ../frontend && npm install",
-  "postStartCommand": "code -r backend/src/main/java/org/example/RoskisposkisApplication.java",
 
   "customizations": {
     "vscode": {
