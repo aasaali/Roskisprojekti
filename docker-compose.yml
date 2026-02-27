@@ -1,20 +1,22 @@
 services:
   app:
     build:
-      context: .
-      dockerfile: .devcontainer/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile #Dockerfile jolla rakennellaan backendistä .jar
     env_file:
       - .env
-    volumes:
-      - .:/workspace:cached
-    command: sleep infinity
+    ports:
+      - "8080:8080"  
     depends_on:
       db:
         condition: service_healthy
       mqtt:
         condition: service_started
+    networks:
+      - roskis_net        
   db:
     image: mysql:8.0.36
+    env_file: .env
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
       - MYSQL_DATABASE=${DB_NAME}
@@ -27,6 +29,8 @@ services:
       retries: 10
     ports:
       - "${DB_PORT}:3306"
+    networks:
+      - roskis_net
 
   mqtt:
     image: eclipse-mosquitto:2.0.18
@@ -38,6 +42,8 @@ services:
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
     restart: always
+    networks:
+      - roskis_net
 
 networks:
   roskis_net:
