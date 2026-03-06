@@ -6,8 +6,7 @@
 
 ### Mitä nää vähintään tarviit:
 
-- VScode
--  `Dev Containers` vscoden marketplacesta
+- Vapaavalintainen IDE jos ei tarvetta developer containerin käytölle
 - Docker tai docker desktop
 
 ## Vaihe 1 (kloonaa branchi ja säädä .env kuntoon):
@@ -23,9 +22,10 @@
 ##  Jos tahdot backendin, SQL:n ja MQTT:n pyörimään automaagisesti:
 - Navigoi juurikansioon `cd Roskisprojekti`
 - Kirjoita `docker compose up --build -d`
-- Jos buildi onnistuu, niin käytössäsi on backend, SQL ja MQTT dockerin sisällä
+- Jos buildi onnistuu, niin käytössäsi on backend, SQL ja MQTT, jokainen omassa containerissa
 - Tällöin backendin APIn tynkä löytyy `http://localhost:8080/api/sites`
-- MQTT portti: `1884` 
+- MQTT portti vakiona `host 1884: --> container: 1883` 
+- Tietokanta portti vakiona `host 3307: --> container: 3306`
 - `docker compose up --build -d`  komento täytyy suorittaa, jos backendi muuttaa koodia/pom.xml:ää
 - Muutoin `docker compose up -d` on riittävä
 
